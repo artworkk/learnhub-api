@@ -2,8 +2,8 @@ import { IWhereUser } from "../data-models/user";
 import { newDataLinkUser } from "./user";
 import { newDataLinkContent } from "./content";
 
-import { IUser } from "../../../domain/entities/user";
-import { IContent } from "../../../domain/entities/content";
+import { IUser } from "../../../../domain/entities/user";
+import { IContent } from "../../../../domain/entities/content";
 
 export interface IDataLinkUser {
   createUser(arg: {

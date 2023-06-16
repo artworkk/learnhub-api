@@ -1,6 +1,6 @@
 import { IDataLinkContent } from ".";
-import { IContent } from "../../../domain/entities/content";
-import { BasePrismaSchemaDataLink, DbDriver } from "../postgres";
+import { IContent } from "../../../../domain/entities/content";
+import { BasePrismaSchemaDataLink, DbDriver } from "..";
 
 export function newDataLinkContent(db: DbDriver): IDataLinkContent {
   return new DataLinkContent(db);

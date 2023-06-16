@@ -1,7 +1,7 @@
 import { IDataLinkUser } from ".";
-import { IUser } from "../../../domain/entities/user";
+import { IUser } from "../../../../domain/entities/user";
 import { IWhereUser } from "../data-models/user";
-import { BasePrismaSchemaDataLink, DbDriver } from "../postgres";
+import { BasePrismaSchemaDataLink, DbDriver } from "..";
 
 export function newDataLinkUser(db: DbDriver): IDataLinkUser {
   return new DataLinkUser(db);
