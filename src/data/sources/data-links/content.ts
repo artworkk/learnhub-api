@@ -2,7 +2,7 @@ import { IDataLinkContent } from ".";
 import { IContent } from "../../../domain/entities/content";
 import { BasePrismaSchemaDataLink, DbDriver } from "../postgres";
 
-export default function NewDataLinkContent(db: DbDriver): IDataLinkContent {
+export function newDataLinkContent(db: DbDriver): IDataLinkContent {
   return new DataLinkContent(db);
 }
 

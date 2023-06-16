@@ -29,8 +29,8 @@ export class App {
     });
 
     // Register routers
-    this._server.use("/user", routes.NewRouterUser(arg.user).router());
-    this._server.use("/content", routes.NewRouterContent(arg.content).router());
+    this._server.use("/user", routes.newRouterUser(arg.user).router());
+    this._server.use("/content", routes.newRouterContent(arg.content).router());
   }
 
   async listenAndServe(port: number | string): Promise<void> {

@@ -2,7 +2,7 @@ import { authenticateJwt } from "../auth/jwt";
 import { IHandlerContent } from "../handlers";
 import { Router } from "./router";
 
-export function NewRouterContent(handler: IHandlerContent): Router {
+export function newRouterContent(handler: IHandlerContent): Router {
   return new RouterContent(handler);
 }
 

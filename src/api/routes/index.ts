@@ -1,4 +1,7 @@
-import { NewRouterUser } from "./user";
-import { NewRouterContent } from "./content";
+import { newRouterUser } from "./user";
+import { newRouterContent } from "./content";
 
-export default { NewRouterUser, NewRouterContent };
+export default {
+  newRouterUser,
+  newRouterContent,
+};

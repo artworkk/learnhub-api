@@ -3,7 +3,7 @@ import { IUser } from "../../../domain/entities/user";
 import { IWhereUser } from "../data-models/user";
 import { BasePrismaSchemaDataLink, DbDriver } from "../postgres";
 
-export default function NewDataLinkUser(db: DbDriver): IDataLinkUser {
+export function newDataLinkUser(db: DbDriver): IDataLinkUser {
   return new DataLinkUser(db);
 }
 

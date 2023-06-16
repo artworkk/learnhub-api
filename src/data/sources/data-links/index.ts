@@ -1,6 +1,6 @@
 import { IWhereUser } from "../data-models/user";
-import NewDataLinkUser from "./user";
-import NewDataLinkContent from "./content";
+import { newDataLinkUser } from "./user";
+import { newDataLinkContent } from "./content";
 
 import { IUser } from "../../../domain/entities/user";
 import { IContent } from "../../../domain/entities/content";
@@ -21,4 +21,4 @@ export interface IDataLinkContent {
   deleteContent(id: string): Promise<void>;
 }
 
-export default { NewDataLinkUser, NewDataLinkContent };
+export default { newDataLinkUser, newDataLinkContent };

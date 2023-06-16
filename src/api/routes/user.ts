@@ -1,7 +1,7 @@
 import { IHandlerUser } from "../handlers";
 import { Router } from "./router";
 
-export function NewRouterUser(handler: IHandlerUser): Router {
+export function newRouterUser(handler: IHandlerUser): Router {
   return new RouterUser(handler);
 }
 
