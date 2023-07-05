@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export interface IOEmbedResponseDto {
   url: string;
   error: string;
@@ -31,9 +29,8 @@ interface IOEmbedDetails {
 export async function getVideoDetails(
   videoUrl: string,
 ): Promise<IOEmbedDetails> {
-  return await axios
-    .get<IOEmbedResponseDto>(`https://noembed.com/embed?url=${videoUrl}`)
-    .then((res) => {
+  return await fetch(`https://noembed.com/embed?url=${videoUrl}`)
+    .then(async (res) => {
       const {
         title,
         url,
@@ -41,7 +38,13 @@ export async function getVideoDetails(
         author_name,
         author_url,
         error: err,
-      } = res.data;
+      } = await res.json();
+
+      if (!title || !url) {
+        return Promise.reject(
+          `failed to get title and url for content: ${videoUrl}`,
+        );
+      }
 
       if (err) return Promise.reject(err);
 
