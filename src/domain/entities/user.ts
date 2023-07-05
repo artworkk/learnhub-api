@@ -1,6 +1,15 @@
-export interface IUser {
-  id: string;
+export interface ICreateUser {
   username: string;
+  password: string;
   name: string;
-  createdAt: Date;
 }
+
+export interface IUser extends ICreateUser {
+  id: string;
+  password: string;
+  registeredAt: Date;
+}
+
+export type IUserDto = IUser & {
+  password: undefined;
+};
