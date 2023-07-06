@@ -40,6 +40,6 @@ export function ToIContentDto(data: IContentWithUserDto): IContentDto {
   };
 }
 
-export function ToIContentsDto(data: IContentWithUserDto[]): IContentDto[] {
+export function ToIContentDtos(data: IContentWithUserDto[]): IContentDto[] {
   return data.map((dat) => ToIContentDto(dat));
 }

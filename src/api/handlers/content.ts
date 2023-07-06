@@ -3,7 +3,7 @@ import { Response } from "express";
 import {
   ICreateContentDto,
   ToIContentDto,
-  ToIContentsDto,
+  ToIContentDtos,
 } from "../../domain/entities/content";
 
 import { IRepositoryContent } from "../../domain/repositories";
@@ -55,7 +55,7 @@ class HandlerContent implements IHandlerContent {
     try {
       const contents = await this.repo.getContents();
 
-      return res.status(200).json(ToIContentsDto(contents)).end();
+      return res.status(200).json(ToIContentDtos(contents)).end();
     } catch (err) {
       const errMsg = `failed to get contents`;
       console.error(`${errMsg}: ${err}`);
