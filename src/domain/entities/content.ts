@@ -26,3 +26,20 @@ export interface IContent extends ICreateContent {
 export interface IContentWithUserDto extends IContent {
   user: IUserDto;
 }
+
+// Remove fields userId and user from IContentWithUserDto
+export interface IContentDto
+  extends Omit<Omit<IContentWithUserDto, "userId">, "user"> {
+  postedBy: IUserDto;
+}
+
+export function ToIContentDto(data: IContentWithUserDto): IContentDto {
+  return {
+    ...data,
+    postedBy: data.user,
+  };
+}
+
+export function ToIContentsDto(data: IContentWithUserDto[]): IContentDto[] {
+  return data.map((dat) => ToIContentDto(dat));
+}

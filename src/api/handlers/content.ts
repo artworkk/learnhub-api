@@ -1,6 +1,12 @@
 import { Response } from "express";
+
+import {
+  ICreateContentDto,
+  ToIContentDto,
+  ToIContentsDto,
+} from "../../domain/entities/content";
+
 import { IRepositoryContent } from "../../domain/repositories";
-import { ICreateContentDto } from "../../domain/entities/content";
 import { getVideoDetails } from "../../domain/services/oembed";
 import { IHandlerContent } from ".";
 import { AuthRequest } from "../auth/jwt";
@@ -33,13 +39,7 @@ class HandlerContent implements IHandlerContent {
         ...createContent,
       });
 
-      const created = {
-        ...createdContent,
-        user: undefined,
-        postedBy: createdContent.user,
-      };
-
-      return res.status(201).json(created).end();
+      return res.status(201).json(ToIContentDto(createdContent)).end();
     } catch (err) {
       const errMsg = "failed to create content";
       console.error(`${errMsg} ${err}`);
@@ -55,7 +55,7 @@ class HandlerContent implements IHandlerContent {
     try {
       const contents = await this.repo.getContents();
 
-      return res.status(200).json(contents).end();
+      return res.status(200).json(ToIContentsDto(contents)).end();
     } catch (err) {
       const errMsg = `failed to get contents`;
       console.error(`${errMsg}: ${err}`);
@@ -81,7 +81,7 @@ class HandlerContent implements IHandlerContent {
     }
 
     try {
-      const content = this.repo.getContent(id);
+      const content = await this.repo.getContent(id);
       if (!content) {
         return res
           .status(404)
@@ -89,7 +89,7 @@ class HandlerContent implements IHandlerContent {
           .end();
       }
 
-      return res.status(200).json(content).end();
+      return res.status(200).json(ToIContentDto(content)).end();
     } catch (err) {
       const errMsg = `failed to get todo ${id}`;
       console.error(`${errMsg}: ${err}`);
@@ -117,7 +117,7 @@ class HandlerContent implements IHandlerContent {
     try {
       const deleted = await this.repo.deleteContent(id);
 
-      return res.status(200).json(deleted).end();
+      return res.status(200).json(ToIContentDto(deleted)).end();
     } catch (err) {
       const errMsg = `failed to delete content: ${id}`;
       console.error(`${errMsg}: ${err}`);

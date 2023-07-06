@@ -9,9 +9,5 @@ export interface IUser extends ICreateUser {
   registeredAt: Date;
 }
 
-export type IUserDto = {
-  id: string;
-  username: string;
-  name: string;
-  registeredAt: Date;
-};
+// Remove field password
+export interface IUserDto extends Omit<IUser, "password"> {}
