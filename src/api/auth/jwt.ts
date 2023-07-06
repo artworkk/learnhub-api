@@ -32,11 +32,10 @@ export function authenticateJwt(
   next: NextFunction,
 ) {
   const token = req.header("Authorization")?.replace("Bearer ", "");
+  if (!token) {
+    return response.Unauthorized(res, "missing JWT token in header");
+  }
   try {
-    if (!token) {
-      return response.Unauthorized(res, "missing JWT token");
-    }
-
     const decoded = jwt.verify(token, authSecret);
     (req as AuthRequest<any, any, any, any>).token = token;
     (req as AuthRequest<any, any, any, any>).payload = {
