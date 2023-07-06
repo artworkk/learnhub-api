@@ -23,6 +23,6 @@ export interface IContent extends ICreateContent {
   updatedAt: Date;
 }
 
-export interface IContentWithUser extends IContent {
+export interface IContentWithUserDto extends IContent {
   user: IUserDto;
 }

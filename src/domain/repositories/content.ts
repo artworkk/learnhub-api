@@ -1,13 +1,21 @@
 import { IRepositoryContent, ContentDb } from ".";
-import {
-  ICreateContent,
-  IContent,
-  IContentWithUser,
-} from "../entities/content";
+import { ICreateContent, IContentWithUserDto } from "../entities/content";
 
 export function newRepositoryContent(db: ContentDb): IRepositoryContent {
   return new DataLinkContent(db);
 }
+
+const includeUserDto = {
+  user: {
+    select: {
+      id: true,
+      username: true,
+      name: true,
+      registeredAt: true,
+      password: false,
+    },
+  },
+};
 
 class DataLinkContent implements IRepositoryContent {
   private readonly contentDb: ContentDb;
@@ -15,19 +23,9 @@ class DataLinkContent implements IRepositoryContent {
     this.contentDb = db;
   }
 
-  async createContent(content: ICreateContent): Promise<IContentWithUser> {
+  async createContent(content: ICreateContent): Promise<IContentWithUserDto> {
     return await this.contentDb.create({
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-            name: true,
-            registeredAt: true,
-            password: false,
-          },
-        },
-      },
+      include: includeUserDto,
       data: {
         ...content,
         userId: undefined,
@@ -40,9 +38,11 @@ class DataLinkContent implements IRepositoryContent {
     });
   }
 
-  async getContents(): Promise<IContent[]> {
+  async getContents(): Promise<IContentWithUserDto[]> {
     return await this.contentDb
-      .findMany()
+      .findMany({
+        include: includeUserDto,
+      })
       .then((contents) => {
         if (!contents) {
           return Promise.resolve([]);
@@ -53,9 +53,11 @@ class DataLinkContent implements IRepositoryContent {
       .catch((err) => Promise.reject(`failed to get contents: ${err}`));
   }
 
-  async getContent(id: number): Promise<IContent> {
+  async getContent(id: number): Promise<IContentWithUserDto> {
     return await this.contentDb
-      .findFirst()
+      .findFirst({
+        include: includeUserDto,
+      })
       .then((content) => {
         if (!content) {
           return Promise.reject(`content ${id} not found`);
@@ -66,12 +68,13 @@ class DataLinkContent implements IRepositoryContent {
       .catch((err) => Promise.reject(`failed to get content ${id}: ${err}`));
   }
 
-  async deleteContent(id: number): Promise<void> {
+  async deleteContent(id: number): Promise<IContentWithUserDto> {
     return await this.contentDb
       .delete({
+        include: includeUserDto,
         where: { id },
       })
-      .then((_) => Promise.resolve())
+      .then((content) => Promise.resolve(content))
       .catch((err) => Promise.reject(`failed to delete content ${id}: ${err}`));
   }
 }

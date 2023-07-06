@@ -4,11 +4,7 @@ import { IWhereUser, newRepositoryUser } from "./user";
 import { newRepositoryContent } from "./content";
 
 import { ICreateUser, IUser } from "../entities/user";
-import {
-  ICreateContent,
-  IContent,
-  IContentWithUser,
-} from "../entities/content";
+import { ICreateContent, IContentWithUserDto } from "../entities/content";
 
 export type UserDb = Prisma.UserDelegate<any>;
 export type ContentDb = Prisma.ContentDelegate<any>;
@@ -18,10 +14,10 @@ export interface IRepositoryUser {
   getUser(where: IWhereUser): Promise<IUser>;
 }
 export interface IRepositoryContent {
-  createContent(content: ICreateContent): Promise<IContentWithUser>;
-  getContents(): Promise<IContent[]>;
-  getContent(id: number): Promise<IContent>;
-  deleteContent(id: number): Promise<void>;
+  createContent(content: ICreateContent): Promise<IContentWithUserDto>;
+  getContents(): Promise<IContentWithUserDto[]>;
+  getContent(id: number): Promise<IContentWithUserDto>;
+  deleteContent(id: number): Promise<IContentWithUserDto>;
 }
 
 export default {

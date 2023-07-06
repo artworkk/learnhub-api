@@ -1,9 +1,18 @@
 import { Request, Response } from "express";
 import { IRepositoryUser } from "../../domain/repositories";
 import { hashPassword, compareHash } from "../auth/bcrypt";
+import { IHandlerUser } from ".";
 
-class HandlerUser {
+export function newHandlerUser(repo: IRepositoryUser) {
+  return new HandlerUser(repo);
+}
+
+class HandlerUser implements IHandlerUser {
   private readonly repo: IRepositoryUser;
+
+  constructor(repo: IRepositoryUser) {
+    this.repo = repo;
+  }
 
   async register(req: Request, res: Response): Promise<Response> {
     const { username, name, password } = req.body;
