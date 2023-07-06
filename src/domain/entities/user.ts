@@ -10,6 +10,9 @@ export interface IUser extends ICreateUser {
   registeredAt: Date;
 }
 
-export type IUserDto = IUser & {
-  password: undefined;
+export type IUserDto = {
+  id: string;
+  username: string;
+  name: string;
+  registeredAt: Date;
 };

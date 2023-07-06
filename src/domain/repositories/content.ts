@@ -1,5 +1,9 @@
 import { IRepositoryContent, ContentDb } from ".";
-import { ICreateContent, IContent } from "../entities/content";
+import {
+  ICreateContent,
+  IContent,
+  IContentWithUser,
+} from "../entities/content";
 
 export function newRepositoryContent(db: ContentDb): IRepositoryContent {
   return new DataLinkContent(db);
@@ -11,7 +15,7 @@ class DataLinkContent implements IRepositoryContent {
     this.contentDb = db;
   }
 
-  async createContent(content: ICreateContent): Promise<IContent> {
+  async createContent(content: ICreateContent): Promise<IContentWithUser> {
     return await this.contentDb.create({
       include: {
         user: {

@@ -1,10 +1,13 @@
 import { IUserDto } from "./user";
 
-export interface ICreateContent {
-  videoTitle: string;
+export interface ICreateContentDto {
   videoUrl: string;
   comment: string;
   rating: number;
+}
+
+export interface ICreateContent extends ICreateContentDto {
+  videoTitle: string;
   thumbnailUrl: string;
   creatorName: string;
   creatorUrl: string;

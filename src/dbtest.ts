@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import repo from "./domain/repositories";
+import { getVideoDetails } from "./domain/services/oembed";
 
 async function main() {
   const db = new PrismaClient();
@@ -24,6 +25,11 @@ async function main() {
   });
 
   console.log(content);
+
+  const url = "https://www.youtube.com/watch?v=3J6ZpoPWauI";
+  const details = await getVideoDetails(url);
+
+  console.log(details);
 }
 
 main();
