@@ -6,7 +6,6 @@ export interface ICreateUser {
 
 export interface IUser extends ICreateUser {
   id: string;
-  password: string;
   registeredAt: Date;
 }
 
