@@ -68,13 +68,18 @@ class DataLinkContent implements IRepositoryContent {
       .catch((err) => Promise.reject(`failed to get content ${id}: ${err}`));
   }
 
-  async deleteContent(id: number): Promise<IContentWithUserDto> {
+  async deleteContent(where: {
+    id: number;
+    userId: string;
+  }): Promise<IContentWithUserDto> {
     return await this.contentDb
       .delete({
         include: includeUserDto,
-        where: { id },
+        where: where,
       })
       .then((content) => Promise.resolve(content))
-      .catch((err) => Promise.reject(`failed to delete content ${id}: ${err}`));
+      .catch((err) =>
+        Promise.reject(`failed to delete content ${where.id}: ${err}`),
+      );
   }
 }

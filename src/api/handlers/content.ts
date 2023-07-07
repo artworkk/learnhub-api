@@ -33,9 +33,11 @@ class HandlerContent implements IHandlerContent {
 
     try {
       const details = await getVideoDetails(createContent.videoUrl);
+      const userId = req.payload.id;
+
       const createdContent = await this.repo.createContent({
         ...details,
-        userId: "foo", // @TODO: use JWT middleware
+        userId, // @TODO: use JWT middleware
         ...createContent,
       });
 
@@ -115,7 +117,8 @@ class HandlerContent implements IHandlerContent {
     }
 
     try {
-      const deleted = await this.repo.deleteContent(id);
+      const userId = req.payload.id;
+      const deleted = await this.repo.deleteContent({ id, userId });
 
       return res.status(200).json(ToIContentDto(deleted)).end();
     } catch (err) {

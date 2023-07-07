@@ -17,7 +17,10 @@ export interface IRepositoryContent {
   createContent(content: ICreateContent): Promise<IContentWithUserDto>;
   getContents(): Promise<IContentWithUserDto[]>;
   getContent(id: number): Promise<IContentWithUserDto>;
-  deleteContent(id: number): Promise<IContentWithUserDto>;
+  deleteContent(where: {
+    id: number;
+    userId: string;
+  }): Promise<IContentWithUserDto>;
 }
 
 export default {
