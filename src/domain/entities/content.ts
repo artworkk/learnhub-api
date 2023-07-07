@@ -33,13 +33,13 @@ export interface IContentDto
   postedBy: IUserDto;
 }
 
-export function ToIContentDto(data: IContentWithUserDto): IContentDto {
+export function toIContentDto(data: IContentWithUserDto): IContentDto {
   return {
     ...data,
     postedBy: data.user,
   };
 }
 
-export function ToIContentDtos(data: IContentWithUserDto[]): IContentDto[] {
-  return data.map((dat) => ToIContentDto(dat));
+export function toIContentDtos(data: IContentWithUserDto[]): IContentDto[] {
+  return data.map((dat) => toIContentDto(dat));
 }

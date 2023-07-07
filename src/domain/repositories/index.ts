@@ -17,6 +17,10 @@ export interface IRepositoryContent {
   createContent(content: ICreateContent): Promise<IContentWithUserDto>;
   getContents(): Promise<IContentWithUserDto[]>;
   getContent(id: number): Promise<IContentWithUserDto>;
+  updateContent(
+    where: { id: number; userId: string },
+    data: { rating: number | undefined; comment: string | undefined },
+  ): Promise<IContentWithUserDto>;
   deleteContent(where: {
     id: number;
     userId: string;

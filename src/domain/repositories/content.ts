@@ -68,6 +68,19 @@ class DataLinkContent implements IRepositoryContent {
       .catch((err) => Promise.reject(`failed to get content ${id}: ${err}`));
   }
 
+  async updateContent(
+    where: { id: number; userId: string },
+    data: { rating: number | undefined; comment: string | undefined },
+  ): Promise<IContentWithUserDto> {
+    return await this.contentDb
+      .update({ include: includeUserDto, where, data })
+      .catch((err) => {
+        return Promise.reject(
+          `failed to update content ${where} with data ${data}`,
+        );
+      });
+  }
+
   async deleteContent(where: {
     id: number;
     userId: string;
