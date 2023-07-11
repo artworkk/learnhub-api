@@ -10,12 +10,6 @@ class RouterContent extends Router {
   constructor(handler: IHandlerContent) {
     super();
 
-    this.router().post(
-      "/",
-      authenticateJwt,
-      handler.createContent.bind(handler),
-    );
-
     this.router().get(
       "/:id",
       authenticateJwt,

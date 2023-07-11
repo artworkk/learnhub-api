@@ -22,34 +22,6 @@ class HandlerContent implements IHandlerContent {
     this.repo = repo;
   }
 
-  async createContent(
-    req: AuthRequest<{}, {}, ICreateContentDto, {}>,
-    res: Response,
-  ): Promise<Response> {
-    const createContent: ICreateContentDto = req.body;
-    if (!createContent.videoUrl) {
-      return res.status(400).json({ error: "missing videoUrl in body" }).end();
-    }
-
-    try {
-      const details = await getVideoDetails(createContent.videoUrl);
-      const userId = req.payload.id;
-
-      const createdContent = await this.repo.createContent({
-        ...details,
-        userId, // @TODO: use JWT middleware
-        ...createContent,
-      });
-
-      return res.status(201).json(toIContentDto(createdContent)).end();
-    } catch (err) {
-      const errMsg = "failed to create content";
-      console.error(`${errMsg} ${err}`);
-
-      return res.status(500).json({ error: errMsg }).end();
-    }
-  }
-
   async getContents(
     req: AuthRequest<{}, {}, {}, {}>,
     res: Response,

@@ -6,7 +6,6 @@ export interface IHandlerUser {
 }
 
 export interface IHandlerContent {
-  createContent: HandlerFuncAuth;
   getContent: HandlerFuncAuth;
   getContents: HandlerFuncAuth;
   deleteContent: HandlerFuncAuth;
