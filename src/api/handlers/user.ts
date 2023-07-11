@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IRepositoryUser } from "../../domain/repositories";
 import { hashPassword, compareHash } from "../auth/bcrypt";
 import { IHandlerUser } from ".";
+import { generateJwt } from "../auth/jwt";
 
 export function newHandlerUser(repo: IRepositoryUser) {
   return new HandlerUser(repo);
@@ -52,7 +53,7 @@ class HandlerUser implements IHandlerUser {
     }
 
     try {
-      const user = await this.repo.getUser(username);
+      const user = await this.repo.getUser({ username });
       if (!user) {
         return res
           .status(404)
@@ -60,16 +61,19 @@ class HandlerUser implements IHandlerUser {
           .end();
       }
 
-      if (await compareHash(password, user.password)) {
+      const authenticated = await compareHash(password, user.password);
+      if (!authenticated) {
         return res
           .status(401)
           .json({ error: `invalid username or password` })
           .end();
       }
 
+      const token = generateJwt({ username, id: user.id });
+
       return res
         .status(200)
-        .json({ status: `${username} logged in` })
+        .json({ status: `${username} logged in`, token })
         .end();
     } catch (err) {
       console.error({ error: `failed to get user ${err}` });
